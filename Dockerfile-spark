@@ -1,0 +1,18 @@
+# Usa una imagen base de Spark
+FROM bitnami/spark:latest
+
+# Establece el directorio de trabajo en /app
+WORKDIR /app
+
+# Copia los archivos necesarios al contenedor
+COPY /flight_prediction/src/main/scala/es/upm/dit/ging/predictor/MakePrediction.scala /app
+COPY /flight_prediction/target/scala-2.12/flight_prediction_2.12-0.1.jar /app
+
+
+# Expone el puerto en el que se ejecutará Spark (si es necesario)
+EXPOSE 4040
+
+# Comando para ejecutar Spark
+CMD ["./bin/spark-submit", "--class", "es.upm.dit.ging.predictor.MakePrediction", "--master", "local[*]", "--packages", "com.datastax.spark:spark-cassandra-connector_2.12:3.4.1,org.apache.spark:spark-sql-kafka-0-10_2.12:3.3.0", "flight_prediction_2.12-0.1.jar"]
+
+

@@ -1,0 +1,7 @@
+FROM cassandra:latest
+
+# Optionally, copy your schema file
+COPY schema.cql /etc/cassandra/schema.cql
+
+CMD ["cassandra", "-f"]
+

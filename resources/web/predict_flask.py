@@ -3,6 +3,12 @@ from flask import Flask, render_template, request
 from pymongo import MongoClient
 from bson import json_util
 
+from cassandra.cluster import Cluster
+from cassandra.auth import PlainTextAuthProvider
+
+cassandra_cluster = Cluster(['localhost'], port=9042)
+cassandra_session = cassandra_cluster.connect('agile_data_science')
+
 # Configuration details
 import config
 
@@ -513,18 +519,22 @@ def flight_delays_page_kafka():
 def classify_flight_delays_realtime_response(unique_id):
   """Serves predictions to polling requestors"""
   
-  prediction = client.agile_data_science.flight_delay_classification_response.find_one(
-    {
-      "UUID": unique_id
-    }
-  )
-  
+  cassandra_query = f"SELECT * FROM flight_delay_classification_response WHERE \"UUID\" = '{unique_id}'"
+  cassandra_result = cassandra_session.execute(cassandra_query)
+    
+  prediction = None
+
+    # Procesa el resultado de Cassandra y prepara la respuesta
+  for row in cassandra_result:
+    prediction = row 
+      
   response = {"status": "WAIT", "id": unique_id}
   if prediction:
     response["status"] = "OK"
-    response["prediction"] = prediction
+    response["prediction"] = {"Prediction": prediction.Prediction, "Timestamp": str(prediction.Timestamp)}
   
   return json_util.dumps(response)
+
 
 def shutdown_server():
   func = request.environ.get('werkzeug.server.shutdown')

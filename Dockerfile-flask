@@ -1,0 +1,25 @@
+# Usa una imagen de Python como base
+FROM python:3.10
+
+# Establece el directorio de trabajo en /app
+WORKDIR /app
+
+# Copia el código de la aplicación al contenedor
+COPY resources/web/predict_flask.py .
+
+# Añade permisos de ejecución al archivo predict_flask.py
+RUN chmod +x predict_flask.py
+
+# Imprime información de depuración
+RUN ls -R /app
+RUN pwd
+
+# Expone el puerto en el que se ejecutará la aplicación Flask
+EXPOSE 5001
+
+# Define la variable de entorno FLASK_APP
+ENV FLASK_APP=predict_flask.py
+
+# Comando para ejecutar el archivo predict_flask.py
+CMD ["python", "predict_flask.py"]
+
