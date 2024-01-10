@@ -4,17 +4,17 @@ FROM bitnami/kafka:3.4.0
 WORKDIR /app
 
 # Copia el archivo de configuración de Kafka
-COPY /home/ibdn/Downloads/kafka_2.12-3.4.0/config/server.properties /app/config/server.properties
+COPY server.properties /opt/bitnami/kafka/config/server.properties
 
 # Copia el script de inicio del servidor Kafka
-COPY /home/ibdn/Downloads/kafka_2.12-3.4.0/bin/kafka-server-start.sh /app/bin/kafka-server-start.sh
+COPY kafka-server-start.sh /opt/bitnami/kafka/bin/kafka-server-start.sh
 
 # Concede permisos de ejecución al script de inicio del servidor Kafka
-RUN chmod +x /opt/bitnami/kafka/bin/kafka-server-start.sh
+#RUN chmod +x /opt/bitnami/kafka/bin/kafka-server-start.sh
 
 # Expone el puerto en el que se ejecutará Kafka (si es necesario)
 EXPOSE 9092
 
 # Comando para ejecutar Kafka
-CMD ["/bin/kafka-server-start.sh", "/config/server.properties"]
+CMD ["/opt/bitnami/kafka/bin/kafka-server-start.sh", "/opt/bitnami/kafka/config/server.properties"]
 

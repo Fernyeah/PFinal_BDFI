@@ -7,12 +7,14 @@ WORKDIR /app
 # Copia el código de la aplicación al contenedor
 COPY resources/web/predict_flask.py .
 
+# Copia el archivo de requisitos si existe
+COPY requirements.txt . 
+
 # Añade permisos de ejecución al archivo predict_flask.py
 RUN chmod +x predict_flask.py
 
-# Imprime información de depuración
-RUN ls -R /app
-RUN pwd
+# Instala las dependencias, incluyendo Flask
+RUN pip install --no-cache-dir -r requirements.txt
 
 # Expone el puerto en el que se ejecutará la aplicación Flask
 EXPOSE 5001

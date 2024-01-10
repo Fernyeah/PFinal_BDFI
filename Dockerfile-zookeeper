@@ -1,0 +1,21 @@
+# Usa una imagen base de ZooKeeper
+FROM bitnami/zookeeper:latest
+
+WORKDIR /app
+
+
+# Copia el archivo de configuración de ZooKeeper
+COPY zookeeper.properties /app/zookeeper/conf/zookeeper.properties
+
+COPY zookeeper-server-start.sh /app/zookeeper/bin/zookeeper-server-start.sh
+
+COPY kafka-run-class.sh /app/zookeeper/bin/kafka-run-class.sh
+
+#RUN chmod +x /app/zookeeper/bin/zookeeper-server-start.sh
+
+
+# Expone el puerto en el que se ejecutará ZooKeeper (si es necesario)
+EXPOSE 2181
+
+# Comando para ejecutar ZooKeeper
+CMD ["/app/zookeeper/bin/zookeeper-server-start.sh", "/app/zookeeper/conf/zookeeper.properties"]

@@ -6,7 +6,8 @@ from bson import json_util
 from cassandra.cluster import Cluster
 from cassandra.auth import PlainTextAuthProvider
 
-cassandra_cluster = Cluster(['localhost'], port=9042)
+#cassandra_cluster = Cluster(['cassandra-container'], port=9042)
+cassandra.cluster.Cluster(['172.23.0.3'], port=9042)
 cassandra_session = cassandra_cluster.connect('agile_data_science')
 
 # Configuration details
@@ -31,7 +32,7 @@ import datetime
 
 # Setup Kafka
 from kafka import KafkaProducer
-producer = KafkaProducer(bootstrap_servers=['localhost:9092'],api_version=(0,10))
+producer = KafkaProducer(bootstrap_servers=['kafka-container:9092'],api_version=(0,10))
 PREDICTION_TOPIC = 'flight_delay_classification_request'
 
 import uuid

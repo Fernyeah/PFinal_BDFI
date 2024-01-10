@@ -1,0 +1,39 @@
+version: '3'
+
+services:
+  zookeeper:
+    image: zookeeper-service
+    container_name: zookeeper-container
+    ports:
+      - "2181:2181"
+
+  kafka:
+    image: kafka-service
+    container_name: kafka-container
+    ports:
+      - "9092:9092"
+    depends_on:
+      - zookeeper
+
+  spark:
+    image: spark-service
+    container_name: spark-container
+    ports:
+      - "4040:4040"
+    depends_on:
+      - kafka
+
+  cassandra:
+    image: cassandra-service
+    container_name: cassandra-container
+    ports:
+      - "9042:9042"
+
+  flask:
+    image: flask-web-service
+    container_name: flask-container
+    ports:
+      - "5001:5001"
+    depends_on:
+      - cassandra
+

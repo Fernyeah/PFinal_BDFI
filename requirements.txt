@@ -10,6 +10,7 @@ numpy
 py4j
 pyelasticsearch
 pymongo
+cassandra-driver
 requests
 scipy
 selenium
