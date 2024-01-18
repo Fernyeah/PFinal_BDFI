@@ -5,23 +5,37 @@ FROM python:3.10
 WORKDIR /app
 
 # Copia el código de la aplicación al contenedor
-COPY resources/web/predict_flask.py .
+COPY predict_flask.py /app
+
+#COPY static /app
+
+#COPY templates /app
 
 # Copia el archivo de requisitos si existe
-COPY requirements.txt . 
+#COPY requirements.txt /app
+
+#COPY config.py /app
+
+#COPY predict_utils.py /app
+
+COPY . /app
 
 # Añade permisos de ejecución al archivo predict_flask.py
-RUN chmod +x predict_flask.py
+RUN chmod +x /app/resources/web/predict_flask.py
+
 
 # Instala las dependencias, incluyendo Flask
-RUN pip install --no-cache-dir -r requirements.txt
+RUN pip install --no-cache-dir -r /app/requirements.txt
 
 # Expone el puerto en el que se ejecutará la aplicación Flask
 EXPOSE 5001
 
+ENV PROJECT_HOME=/app
+
 # Define la variable de entorno FLASK_APP
-ENV FLASK_APP=predict_flask.py
+ENV FLASK_APP=/app/resources/web/predict_flask.py
 
 # Comando para ejecutar el archivo predict_flask.py
-CMD ["python", "predict_flask.py"]
+#CMD ["python", "/resources/web/predict_flask.py"]
 
+CMD ["sh", "-c", "sleep 240 && python /app/resources/web/predict_flask.py"]

@@ -26,32 +26,43 @@ object MakePrediction {
     import spark.implicits._
 
     //Load the arrival delay bucketizer
-    val base_path= "/home/ibdn/Desktop/PFINAL/practica_creativa"
-    val arrivalBucketizerPath = "%s/models/arrival_bucketizer_2.0.bin".format(base_path)
+    //val base_path= "/home/ibdn/Desktop/PFINAL/practica_creativa"
+    //val base_path= "/app"
+    //val arrivalBucketizerPath = "%s/models/arrival_bucketizer_2.0.bin".format(base_path)
+    
+    val arrivalBucketizerPath = "/practica_creativa/models/arrival_bucketizer_2.0.bin"
+    
     print(arrivalBucketizerPath.toString())
     val arrivalBucketizer = Bucketizer.load(arrivalBucketizerPath)
     val columns= Seq("Carrier","Origin","Dest","Route")
 
     //Load all the string field vectorizer pipelines into a dict
-    val stringIndexerModelPath =  columns.map(n=> ("%s/models/string_indexer_model_"
-      .format(base_path)+"%s.bin".format(n)).toSeq)
+    //val stringIndexerModelPath =  columns.map(n=> ("%s/models/string_indexer_model_".format(base_path)+"%s.bin".format(n)).toSeq)
+      
+    val stringIndexerModelPath = columns.map(n => s"/practica_creativa/models/string_indexer_model_$n.bin")  
+      
     val stringIndexerModel = stringIndexerModelPath.map{n => StringIndexerModel.load(n.toString)}
     val stringIndexerModels  = (columns zip stringIndexerModel).toMap
 
     // Load the numeric vector assembler
-    val vectorAssemblerPath = "%s/models/numeric_vector_assembler.bin".format(base_path)
+    //val vectorAssemblerPath = "%s/models/numeric_vector_assembler.bin".format(base_path)
+    
+    val vectorAssemblerPath = "/practica_creativa/models/numeric_vector_assembler.bin"
+    
     val vectorAssembler = VectorAssembler.load(vectorAssemblerPath)
 
     // Load the classifier model
-    val randomForestModelPath = "%s/models/spark_random_forest_classifier.flight_delays.5.0.bin".format(
-      base_path)
+    //val randomForestModelPath = "%s/models/spark_random_forest_classifier.flight_delays.5.0.bin".format(base_path)
+    
+    val randomForestModelPath = "/practica_creativa/models/spark_random_forest_classifier.flight_delays.5.0.bin"
+
     val rfc = RandomForestClassificationModel.load(randomForestModelPath)
 
     //Process Prediction Requests in Streaming
     val df = spark
       .readStream
       .format("kafka")
-      .option("kafka.bootstrap.servers", "localhost:9092")
+      .option("kafka.bootstrap.servers", "kafka:9092")
       .option("subscribe", "flight_delay_classification_request")
       .load()
     df.printSchema()
@@ -150,7 +161,7 @@ object MakePrediction {
       .foreachBatch { (batchDF: DataFrame, batchId: Long) => 
         batchDF.write
           .cassandraFormat("flight_delay_classification_response", "agile_data_science") 
-          .option("spark.cassandra.connection.host", "localhost")
+          .option("spark.cassandra.connection.host", "cassandra-container")
           .option("spark.cassandra.connection.port", "9042")
           .mode("append")
           .save()

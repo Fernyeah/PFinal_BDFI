@@ -1,7 +1,17 @@
 FROM cassandra:latest
 
-# Optionally, copy your schema file
-COPY schema.cql /etc/cassandra/schema.cql
+#WORKDIR /app 
 
+# Copia los archivos necesarios 
+
+# COPY schema.cql /app/etc/cassandra/schema.cql 
+
+# COPY entrypoint.sh /app/entrypoint.sh 
+
+# Otorga permisos de ejecución al script de entrada 
+
+#RUN chmod +x /app/entrypoint.sh 
+
+# Configura el script de entrada para ejecutar el comando CQL 
+#ENTRYPOINT ["/app/entrypoint.sh"] 
 CMD ["cassandra", "-f"]
-

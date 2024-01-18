@@ -1,3 +1,22 @@
+data/diagnostic.data/
+data/journal/
+data/.mongodb/
+data/WiredTiger
+data/WiredTiger.lock
+data/WiredTiger.turtle
+data/WiredTiger.wt
+data/WiredTigerHS.wt
+data/_mdb_catalog.wt
+data/collection-0--591815476783397368.wt
+data/collection-2--591815476783397368.wt
+data/collection-4--591815476783397368.wt
+data/index-1--591815476783397368.wt
+data/index-3--591815476783397368.wt
+data/index-5--591815476783397368.wt
+data/index-6--591815476783397368.wt
+data/sizeStorer.wt
+data/storage.bson
+data/mongod.lock
 .DS_Store
 .ipynb_checkpoints
 mongodb
@@ -31,4 +50,6 @@ cassandra
 janusgraph
 deep
 data/origin_dest_distances.jsonl
+* -x
+
 data/simple_flight_delay_features.jsonl.bz2
