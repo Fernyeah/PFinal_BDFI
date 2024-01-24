@@ -82,6 +82,9 @@ Abriremos un terminal y ejecutaremos:
 ```
 git clone https://github.com/Fernyeah/PFinal_BDFI.git
 ```
+```
+cd PFinal_BDFI
+```
 Además, ejecutaremos:
 ```
 resources/download_data.sh
