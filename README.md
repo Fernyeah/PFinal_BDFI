@@ -127,6 +127,7 @@ docker exec kafka /opt/bitnami/kafka/bin/kafka-topics.sh --create --topic flight
 ```
 
 **Creación de la BD y tabla en Cassandra**
+
 En el último de los terminales, entraremos al contenedor de _Cassandra_, para crear la base de datos y la tabla.
 ```
 docker exec -it cassandra-container /bin/bash
