@@ -16,27 +16,27 @@ Se han modificado los archivos `predict_flask.py` y `MakePrediction.scala` para 
 
 Para el dockerizado de los servicios presentes en el sistema ha sido necesario la creación de las imagenes:
 
-- cassandra-service
-- flask-web-service
-- spark-service
+- _cassandra-service_
+- _flask-web-service_
+- _spark-service_
 
 Además se han empleado imagenes existentes para:
 
-- mongo:6.0
-- bitnami/zookeeper:3.7
-- bitnami/kafka:3.4
+- _mongo:6.0_
+- _bitnami/zookeeper:3.7_
+- _bitnami/kafka:3.4_
 
 Mediante el _docker-compose_ se han creado los contenedores:
 
-- mongo-container
-- zookeeper-container
-- kafka
-- cassandra-container
-- flask-container
-- spark-master
-- spark-worker-1
-- spark-worker-2
-- spark-submit
+- _mongo-container_
+- _zookeeper-container_
+- _kafka_
+- _cassandra-container_
+- _flask-container_
+- _spark-master_
+- _spark-worker-1_
+- _spark-worker-2_
+- _spark-submit_
 
 Al dockerizar todos los servicios del escenario ha sido necesario modificar los archivos `predict_flask.py` y `MakePrediction.scala` para conectarlos con los contenedores necesarios que ejecuten cada servicio.
 
@@ -56,6 +56,7 @@ Para el despliegue del escenario en Google Cloud serán necesarios 3 pasos.
 ### Creación y configuración de la máquina virtual
 
 En cuanto a la creación del escenario. Debemos dirigirnos a nuestro panel de Google Cloud y crear una Máquina Virtual dentro de nuestro espacio de trabajo.
+
 **IMPORTANTE** Necesitaremos aumentar el tamaño del disco de la MV, de esta manera podremos trabajar sin problemas de almacenamiento al crear las diferentes imágenes de docker.
 
 Además, es importante crear 2 reglas de Firewall, para habilitar las comunicaciones in & out por el puerto 5001.
@@ -65,11 +66,8 @@ Además, es importante crear 2 reglas de Firewall, para habilitar las comunicaci
 Para el desarrollo del despligue es necesario disponer de diferentes dependencias.
 
 - Instalación de docker
-
 - Intalación de docker-compose
-
 - Instalación de sbt
-
 - Instalación de git
 
 
