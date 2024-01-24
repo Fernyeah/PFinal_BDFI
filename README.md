@@ -1,4 +1,5 @@
 # Práctica Final - Predicción de vuelos
+#### Rodrigo Balmaseda López | Fernando Herrera Pozo
 
 ## Implementaciones realizadas
 
