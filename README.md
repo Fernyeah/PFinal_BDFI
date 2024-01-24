@@ -109,6 +109,7 @@ docker-compose up
 Una vez arranque el despliegue, es cuando utilizaremos los otros 3 terminales que hemos iniciado.
 
 **Importar los datos a MongoDB**
+
 En uno de los terminales, entraremos en el contenedor de _Mongo_ para importar los datos:
 ```
 docker exec -it mongo-container /bin/bash
@@ -119,6 +120,7 @@ mongoimport --host mongo-container -d agile_data_science -c origin_dest_distance
 ```
 
 **Creación del topic en Kafka**
+
 En un nuevo terminal, crearemos el topic de _Kafka_:
 ```
 docker exec kafka /opt/bitnami/kafka/bin/kafka-topics.sh --create --topic flight_delay_classification_request --partitions 1 --replication-factor 1 --bootstrap-server kafka:9092 
