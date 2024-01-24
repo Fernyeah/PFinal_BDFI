@@ -10,14 +10,40 @@ A partir del escenario proporcionado, se han realizado las siguientes implementa
 
 ### Cassandra como BBDD para el resultado de la predicción
 
-
+Se han modificado los archivos `predict_flask.py` y `MakePrediction.scala` para modificar la base de datos de guardado de la predicción. Concectándolo así con Cassandra.
 
 ### Dockerizado de los servicios
 
+Para el dockerizado de los servicios presentes en el sistema ha sido necesario la creación de las imagenes:
+
+- cassandra-service
+- flask-web-service
+- spark-service
+
+Además se han empleado imagenes existentes para:
+
+- mongo:6.0
+- bitnami/zookeeper:3.7
+- bitnami/kafka:3.4
+
+Mediante el _docker-compose_ se han creado los contenedores:
+
+- mongo-container
+- zookeeper-container
+- kafka
+- cassandra-container
+- flask-container
+- spark-master
+- spark-worker-1
+- spark-worker-2
+- spark-submit
+
+Al dockerizar todos los servicios del escenario ha sido necesario modificar los archivos `predict_flask.py` y `MakePrediction.scala` para conectarlos con los contenedores necesarios que ejecuten cada servicio.
 
 ### Despliegue del escenario en Google Cloud
 
-
+Para el despliegue del escenario en Google Cloud se ha hecho uso de los créditos facilitados por la Escuela. 
+Se ha creado una máquina virtual en Google Cloud y desplegado el sistema siguiendo los pasos indicados a continuación.
 
 
 ## Instrucciones para el despliegue del escenario
@@ -38,15 +64,13 @@ Además, es importante crear 2 reglas de Firewall, para habilitar las comunicaci
 
 Para el desarrollo del despligue es necesario disponer de diferentes dependencias.
 
-Instalación de docker
+- Instalación de docker
 
-Intalación de docker-compose
+- Intalación de docker-compose
 
-Instalación de sbt
+- Instalación de sbt
 
-Instalación de git
-
-
+- Instalación de git
 
 
 ### Inicio del sistema
@@ -68,16 +92,13 @@ resources/download_data.sh
 
 Para construir las imagenes necesarias contamos con diferentes Dockerfiles, para crear estas imagenes ejecutaremos:
 ```
-docker build 
+docker build -t cassandra-service -f Dockerfile-cassandra
 ```
 ```
-docker build 
+docker build -t flask-web-service -f Dockerfile-flask
 ```
 ```
-docker build 
-```
-```
-docker build 
+docker build -t spark-service -f Dockerfile-spark 
 ```
 
 #### Inicio del escenario
