@@ -157,7 +157,7 @@ CREATE TABLE IF NOT EXISTS flight_delay_classification_response ("Origin" TEXT, 
 Una vez realizados estos comandos, pasados xxx segundos desde el inicio de _docker-compose up_ se ejecutará el comando _spark-submit_.
 Después, podremos ver como se ejecuta el contenedor _flask_ , entonces será cuando podamos acceder a la web para comprobar el correcto funcionamiento del sistema.
 
-Accede a la dirección http://localhost:5001/flights/delays/predict_kafka .
+Accede a la dirección http://[ip_externa_de_la_MV]:5001/flights/delays/predict_kafka .
 
 Ejecuta el submit de la página web y comprueba los resultados obtenidos. 
 
